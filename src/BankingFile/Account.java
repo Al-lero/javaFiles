@@ -17,6 +17,9 @@ public class Account {
 
     }
 
+    public Account(String firstName, String lastName, String pin) {
+    }
+
     public void deposit(int amount) {
         if (amount > 0) {
             balance += amount;
@@ -52,10 +55,10 @@ public class Account {
         return accountName;
     }
 
-    private int balance(){
+    int balance(){
         return balance;
     }
-    private String pin(){
+    String pin(){
         return pin;
     }
 

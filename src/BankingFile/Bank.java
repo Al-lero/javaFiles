@@ -2,19 +2,21 @@ package BankingFile;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
-import java.util.Scanner;
-
-import static BankingFile.AtmMachine.accounts;
 
 
 public class Bank {
     private static ArrayList<Account> accounts = new java.util.ArrayList<>();
     private static char[] amount;
-    private static int balance;
+    static int balance;
+    private static int customerAccount;
+    private static Account getAccountNumber;
+    private static int deposit;
+    private static int transfer;
+    private static String[] pin;
     int numberOfCustomer;
     static Random rand = new Random();
-
 
     private static void addAccount(Account account) {
         accounts.add(account);
@@ -24,12 +26,13 @@ public class Bank {
 
     }
 
-    private static void withdrawFrom(int accountNumber, int pin, String amount) {
-        Account currentCustomer = findAccountWith(accountNumber);
+
+    static int withdrawFrom(String accountNumberToWithdrawFrom, int pin, int amountToWithdraw) {
+        Account currentCustomer = findAccountWith(Integer.parseInt(accountNumberToWithdrawFrom));
         if (currentCustomer != null) {
-            String intialBalance = String.valueOf(accountNumber);
-            if (currentCustomer.checkBalance(intialBalance) < Integer.parseInt(amount)) {
-                currentCustomer.withdraw(Integer.parseInt(amount), String.valueOf(pin));
+            String intialBalance = String.valueOf(accountNumberToWithdrawFrom);
+            if (currentCustomer.checkBalance(intialBalance) < Integer.parseInt(String.valueOf(amountToWithdraw))) {
+                currentCustomer.withdraw(Integer.parseInt(String.valueOf(amountToWithdraw)), String.valueOf(pin));
             } else {
                 System.out.println("Insufficient Amount");
             }
@@ -37,9 +40,11 @@ public class Bank {
             System.out.println("Invalid Pin");
         }
 
+        return pin;
     }
 
-    private static Account findAccountWith(int accountNumber) {
+
+    static Account findAccountWith(int accountNumber) {
         for (Account account : accounts) {
             int currentAccountNumber = account.getAccountNumber();
             if (currentAccountNumber == accountNumber) {
@@ -55,19 +60,19 @@ public class Bank {
 
     }
 
-    private static void transferFrom(int accountNumberTransferredFrom, int accountNumberTransferredTo, int pin, String amount) {
+    static void transferFrom(int accountNumberTransferredFrom, int accountNumberTransferredTo) {
         Account customerToTransferFrom = findAccountWith(accountNumberTransferredFrom);
         Account customerToTransferTo = findAccountWith(accountNumberTransferredTo);
         if (customerToTransferFrom != null && customerToTransferTo != null) {
             String intialBalance = String.valueOf(accountNumberTransferredFrom);
-            if (customerToTransferFrom.checkBalance(intialBalance) > Integer.parseInt(amount)) {
-                customerToTransferFrom.withdraw(Integer.parseInt(amount), String.valueOf(pin));
-                customerToTransferTo.deposit(Integer.parseInt(amount));
+            if (customerToTransferFrom.checkBalance(intialBalance) > Integer.parseInt(Arrays.toString(amount))) {
+                customerToTransferFrom.withdraw(Integer.parseInt(Arrays.toString(amount)), String.valueOf(pin));
+                customerToTransferTo.deposit(Integer.parseInt(Arrays.toString(amount)));
             } else {
                 System.out.println("Insufficient Amount");
             }
         } else {
-            System.out.println("Account Number Not Founc");
+            System.out.println("Account Number Not Found");
         }
     }
 
@@ -87,8 +92,27 @@ public class Bank {
         }
         return balance;
     }
-    
+
+
+
+    public static Account getAccountNumber(int accountNumber) {
+        if (customerAccount == accountNumber) {
+            return getAccountNumber;
+        }
+   
+        return null;
+        
+    }
+
+    public static int deposit(int amountToDeposit, int accountNumber) {
+        return deposit;
+    }
+
+
+    public static void withdrawFrom(String amountToWithdraw, int pin, Account accountNumberToWithdrawFrom) {
+    }
 }
+
 
 
 

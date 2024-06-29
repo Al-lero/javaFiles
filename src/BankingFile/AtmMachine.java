@@ -5,16 +5,19 @@ import java.util.Random;
 import java.util.Scanner;
 
 
+import static BankingFile.Bank.balance;
+import static BankingFile.Bank.findAccountWith;
+
+
 public class AtmMachine {
     static ArrayList<Account> accounts = new ArrayList<>();
-    static Scanner inputted = new Scanner(System.in);
-    static Random rand = new Random();
-    private static String getAccountNumber;
-    private Bank bank = new Bank();
+    static Scanner scanner = new Scanner(System.in);
+    private static int accountNumberTransferredFrom;
+    private static int accountNumberToWithdrawFrom;
+
 
     public static void main(String[] args) {
         gotoMainMenu();
-
 
     }
 
@@ -32,7 +35,7 @@ public class AtmMachine {
                 """;
         System.out.println(mainMenu);
         System.out.println("Enter Your Preffered Number: ");
-        char userInput = inputted.nextLine().charAt(0);
+        char userInput = scanner.nextLine().charAt(0);
 
         switch (userInput) {
             case '1':
@@ -51,12 +54,12 @@ public class AtmMachine {
                 withdraw();
                 break;
             case '6':
-                //checkBalance();
+                checkBalance();
                 break;
             case '7':
                 transfer();
                 break;
-            //case '8': print(); break;
+            case '8': print();
             default:
                 gotoMainMenu();
 
@@ -65,7 +68,92 @@ public class AtmMachine {
 
     }
 
+    private static void print() {
+    }
+
+    private static void withdraw() {
+        int accountNumber = Integer.parseInt(input("Enter Account Number: "));
+        Account accountNumberToWithdrawFrom = Bank.getAccountNumber(accountNumber);
+        String amountToWithdraw = String.valueOf(Integer.parseInt(input("Enter Account Number: ")));
+        int pin = Integer.parseInt(input("Enter your desired pin: "));
+        Bank.withdrawFrom(amountToWithdraw , pin, accountNumberToWithdrawFrom);
+
+
+    }
+
+    private static void deposit() {
+        int accountNumber = Integer.parseInt(input("Enter Account Number: "));
+        Account customerAccount = Bank.getAccountNumber(accountNumber);
+        if (customerAccount != null) {
+            int amountToDeposit = Integer.parseInt(input("Enter Account Number: "));
+            Bank.deposit(amountToDeposit, accountNumber);
+            print("Your deposit of %d is successful. Your balance is %d%n", amountToDeposit);
+        } else {
+            print("Account not found.");
+        }
+
+        gotoMainMenu();
+
+
+    }
+
+    private static int print(String s, int amountToDeposit) {
+        return amountToDeposit;
+    }
+
+    private static void createAccount() {
+        String firstName = input("Enter your firstName:");
+        String lastName = input("Enter your lastName:");
+        String pin = input("Enter your desired pin: ");
+        int accountNumber = new Random().nextInt(1_000_000_000);
+        //Account account = new Account(firstName, lastName, Integer.parseInt(pin), "0", (int) accountNumber);
+        //accounts.add(account);
+        Account account = new Account(firstName, lastName,pin, balance, accountNumber);
+        accounts.add(account);
+        print("Account opened Successfully");
+        print("Your Account Number is : " + accountNumber);
+            gotoMainMenu();
+
+        }
+
+    public static void print(String message){
+        System.out.println(message);
+}
+
+    private static String input(String message){
+        print(message);
+        String print = "";
+        return print;
+}
+
+    //private static Double prompt(String message){
+      //  print(message);
+        //return Scanner.nextDouble();
+    //}
+
+    private static void checkBalance() {
+        int accountNumber = Integer.parseInt(input("Enter Account Number: "));
+        String pin = input("Enter pin to check balance: ");
+        Account customerAccount = accounts.get(Integer.parseInt(String.valueOf(accountNumber)));
+        if (customerAccount != null) {
+            if (pin.equals(customerAccount.pin())) {
+                print("Your Account Balance is %d%n", customerAccount.balance());
+            } else {
+                print("Wrong pin");
+            }
+        } else {
+            print("Account not found. Please check the account number.");
+        }
+        gotoMainMenu();
+    }
+
     private static void transfer() {
+        input("Enter Account number to transfer from: ");
+        findAccountWith(accountNumberTransferredFrom);
+        int accountNumberToTransferTo = Integer.parseInt(input("Enter Account number to transfer To: "));
+        findAccountWith(accountNumberToTransferTo);
+        int amountToTransfer = Integer.parseInt(input("Enter Account Number: "));
+        Bank.transferFrom(amountToTransfer, accountNumberToTransferTo);
     }
 
 
@@ -73,77 +161,27 @@ public class AtmMachine {
     }
 
     private static void exitApplication() {
+        int accountNumber = Integer.parseInt(input("Enter Account Number: "));
+        Account customerAccount = accounts.get(Integer.parseInt(String.valueOf(accountNumber)));
+        String pin = input("Enter pin to check balance: ");
+        if(customerAccount.equals(pin)) {
+            print("Account Log out Successfully");
+        }
+        else {
+            print("Try Again");
+
 
     }
 
-    private static void createAccount() {
-        System.out.println("Enter Your First name: ");
-        String firstName = inputted.nextLine();
-        System.out.println("Enter Your Last Name: ");
-        String lastName = inputted.nextLine();
-        System.out.println("Enter Your Preferred Pin: ");
-        String pin = inputted.nextLine();
-        int accountNumber = new Random().nextInt(1_000_000_000);
-        Account account = new Account(firstName, lastName, Integer.parseInt(pin), "0", (int) accountNumber);
-        accounts.add(account);
-        System.out.println("Account opened Successfully");
-        System.out.println("Your Account Number is : " + accountNumber);
-        gotoMainMenu();
-
     }
-
-    private static void deposit() {
-        System.out.println("Enter Your Account Number: ");
-        String accountNumber = inputted.nextLine();
-        Account customerAccount = getAccountNumber(accountNumber);
-            if (customerAccount != null) {
-                System.out.println("Enter Amount to deposit: ");
-                int amount = inputted.nextInt();
-                customerAccount.deposit(amount);
-                System.out.printf("Your deposit of %d is successful. Your balance is %d%n", amount, customerAccount.getBalance());
-            } else {
-                System.out.println("Account not found.");
-            }
-
-            gotoMainMenu();
+}
 
 
-        }
-
-        private static Account getAccountNumber (String accountNumber){
-            for (Account account1 : accounts) {
-                if(account1 != null && account1.accountNumber.equals(this.accountNumber)) {
-                    return account1;
-                }
-            }
-            return null;
-        }
 
 
-        private static void withdraw () {
-        }
-
-//        private static void checkBalance () {
-//            System.out.println("Enter Your Account Number: ");
-//            String accountNumber = inputted.nextLine();
-//            System.out.println("Enter pin to check balance: ");
-//            String pin = inputted.nextLine();
-//            Account customerAccount = accounts.get(Integer.parseInt(accountNumber));
-//            if (customerAccount != null) {
-//                if (pin.equals(customerAccount.getPin())) { // Assuming Account has a 'getPin()' method
-//                    System.out.printf("Your Account Balance is %d%n", customerAccount.getBalance());
-//                } else {
-//                    System.out.println("Wrong pin");
-//                }
-//            } else {
-//                System.out.println("Account not found. Please check the account number.");
-//            }
-//            gotoMainMenu();
-//
-//        }
 
 
-    }
+
 
    
 
