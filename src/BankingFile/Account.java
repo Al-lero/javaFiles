@@ -2,23 +2,28 @@ package BankingFile;
 
 public class Account {
     private int balance;
-    private String pin;
-    private int accountNumber;
+    private final String pin;
+    private final int accountNumber;
     private String accountName;
 
     public Account(String firstName, String lastName, int balance, String pin, int accountNumber) {
         this.balance = balance;
         this.pin = pin;
         this.accountNumber = accountNumber;
-        this.accountName = accountName;
     }
 
     public Account(String firstName, String lastName, String pin, int balance,int accountNumber) {
+        this.balance = balance;
+        this.pin = pin;
+        this.accountNumber = accountNumber;
+        this.accountName = firstName + " " + lastName;
 
     }
 
-    public Account(String firstName, String lastName, String pin) {
+    public static int generateAccountNumber() {
+        return 0;
     }
+
 
     public void deposit(int amount) {
         if (amount > 0) {
@@ -41,18 +46,14 @@ public class Account {
     }
 
     public int getAccountNumber() {
-        return accountNumber;
+        return this.accountNumber;
     }
 
     public int checkBalance(String customerAccountNumber) {
-        if(Integer.parseInt(customerAccountNumber) == accountNumber){
+        if(Integer.parseInt(customerAccountNumber) == this.accountNumber){
             return balance;
         }
         return 0;
-    }
-
-    public String getAccountName() {
-        return accountName;
     }
 
     int balance(){
@@ -63,8 +64,22 @@ public class Account {
     }
 
 
+    public String getPin() {
+        return pin;
+    }
+
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
 
 }
+
 
 
 
