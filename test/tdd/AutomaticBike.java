@@ -1,25 +1,29 @@
 package tdd;
 
 public class AutomaticBike {
-    public boolean isOff;
-    private boolean isOn;
-    private int speed;
+    public boolean isOn;
+    private int acceleration;
     private int gear;
+    private int deceleration;
     private int currentSpeed;
-    private int maximumSpeed;
-    ;;
-
-
-    public boolean isOn() {
-        return this.isOn;
-    }
+    private int setGear;
+    private int getGearSpeed;
+    private int gearSpeed;
 
     public void turnOn() {
         this.isOn = true;
     }
 
     public void turnOff() {
-        this.isOff = true;
+        this.isOn = false;
+    }
+
+    public void setAcceleration(int acceleration) {
+        this.acceleration = acceleration;
+    }
+
+    public int getAcceleration() {
+        return this.acceleration++;
     }
 
     public void setCurrentSpeed(int speed) {
@@ -27,88 +31,58 @@ public class AutomaticBike {
     }
 
     public void setGear(int gear) {
-        this.gear = gear;
-
+        this.setGear = gear;
     }
-
-    public void accelerate() {
-        if(gear == 1) {
-             currentSpeed += 1;
-        }
-        if (gear == 2) {
-            currentSpeed +=2;
-        }
-        else if (gear == 3) {
-            currentSpeed += 3;
-        }
-        else {
-            currentSpeed += 4;
-        }
-    }
-
 
     public int getCurrentSpeed() {
         return currentSpeed;
     }
 
+    public void accelerate() {
+        if (setGear == 1) {
+            currentSpeed += 1;
+        } else if (setGear == 2) {
+            currentSpeed += 2;
+        } else if (setGear == 3) {
+            currentSpeed += 3;
+        } else if (setGear == 4) {
+            currentSpeed += 4;
+        }
+
+    }
+
     public void decelerate() {
-        if (gear == 1) {
+        if (setGear == 1) {
             currentSpeed -= 1;
-        }
-        if (gear == 2) {
+        } else if (setGear == 2) {
             currentSpeed -= 2;
+        } else if (setGear == 3) {
+            currentSpeed -= 3;
+        } else if (setGear == 4) {
+            currentSpeed -= 4;
         }
-
-         if (gear == 3) {
-                currentSpeed -= 3;
-            }
-         else if (gear == 4) {
-             currentSpeed -= 4;
-           }
-        }
-
-    public int getSpeed() {
-        return speed;
-
     }
 
-    public AutomaticBike(){
-        this.speed = 0;
-    }
-
-
-    public void changeGear(int gear) {
-        int currentGear = Math.max(0, Math.min(gear, 30));
-
-    }
-
-    public int getCurrentGear() {
-        return currentSpeed;
-    }
-
-
-    public void acceleration() {
-        if(gear == 6)
-            currentSpeed += 6;
-    }
-
-    public int accelerate(int i) {
-        speed += i;
-        speed = Math.min(speed, maximumSpeed);
-        return i;
-    }
-
-    public void decelerate(int i) {
-        speed -= i;
-        currentSpeed = 0;
-    }
+    public int getGear() {
+        return this.gear;
 }
 
+    public void gearSpeed() {
+        if (this.acceleration >= 0 && this.acceleration <= 20) {
+            this.gear = 1;
+        } else if (this.gear >= 21 && this.acceleration <= 30) {
+            this.gear = 2;
+        } else if (this.acceleration >= 31 && this.acceleration <= 40) {
+            this.gear = 3;
+        } else if (this.acceleration >= 41) {
+            this.gear = 4;
+        }
+    }
 
-
-
-
-
+    public int getGearSpeed() {
+        return this.gearSpeed;
+    }
+}
 
 
 

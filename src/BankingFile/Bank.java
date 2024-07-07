@@ -2,8 +2,6 @@ package BankingFile;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 
@@ -23,7 +21,7 @@ public class Bank {
         accounts.add(account);
     }
 
-    private static void addCustomer(String firstName, String lastName) {
+   private static void addCustomer(String firstName, String lastName) {
 
     }
 
